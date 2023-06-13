@@ -29,30 +29,38 @@ public class SimpleTokenHandler {
 
     public String validate(String token) {
         List<String> tokenInfo = Arrays.stream(token.split(">")).toList();
-        String tokenSecret = tokenInfo.get(1);
-        checkSecret(tokenSecret);
 
-        String StringExpired = tokenInfo.get(2);
-        
-        if (isExpired(StringExpired)) {
-            log.info("만료됐음 재발급을 시도합니다.");
+        String secret = tokenInfo.get(1);
+        checkSecret(secret);
+
+        String expiredTime = tokenInfo.get(2);
+        if (isExpired(expiredTime)) {
+            log.info("[리프레시 토큰을 통해 재발급을 시도합니다.]");
             return refreshTokenHandler.reIssue(tokenInfo.get(3));
         }
+
         return "valid";
     }
 
     private void checkSecret(String tokenSecret) {
-        log.info("[secretKey {}]", secretKey);
+        log.info("[Token의 SecretKey 값을 검증합니다.]");
         if (!secretKey.equals(tokenSecret)) {
-            throw new IllegalArgumentException("조작됨");
+            throw new IllegalArgumentException("유효하지 않은 SecretKey");
         }
     }
 
     private boolean isExpired(String StringExpired) {
         LocalDateTime expiredTime = LocalDateTime.parse(StringExpired, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        log.info("[expiredTime {}, now {} expired = {}]", expiredTime, LocalDateTime.now(), expiredTime.isBefore(LocalDateTime.now()));
+        boolean isExpired = expiredTime.isBefore(LocalDateTime.now());
+        log.info("[토큰의 만료 시간을 검사합니다. expiredTime {}, now {} expired = {}]", expiredTime, LocalDateTime.now(), isExpired);
 
-        return expiredTime.isBefore(LocalDateTime.now());
+        if (isExpired) {
+            log.info("[만료된 엑세스 토큰입니다.]");
+        }
 
+        if (!isExpired) {
+            log.info("[만료되지 않은 엑세스 토큰입니다.]");
+        }
+        return isExpired;
     }
 }

@@ -17,9 +17,8 @@ public class SimpleAuthInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = simpleTokenHandler.validate(request.getHeader("Authorization"));
-        log.info("[인터셉터 동작 token = {}]", token);
         if (!"valid".equals(token)) {
-            log.info("재발급 토큰을 헤더에 추가합니다.");
+            log.info("엑세스 토큰을 재발급합니다. Authorization 헤더를 확인하세요.");
             response.addHeader("Authorization", token);
         }
         return true;

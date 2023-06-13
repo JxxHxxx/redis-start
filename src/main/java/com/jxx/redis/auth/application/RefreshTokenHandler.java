@@ -22,9 +22,9 @@ public class RefreshTokenHandler {
         Optional<RefreshToken> oRefreshToken = refreshTokenRepository.findById(id);
         if (oRefreshToken.isPresent()) {
             RefreshToken refreshToken = oRefreshToken.get();
-            String email = refreshToken.getEmail();
-            return email + ">" + secretKey + ">" + LocalDateTime.now().plusSeconds(60) + refreshToken.getMemberId();
+            return refreshToken.getEmail() + ">" + secretKey + ">" + LocalDateTime.now().plusSeconds(60) + ">" + refreshToken.getMemberId();
         }
+
         throw new IllegalArgumentException("로그인이 필요합니다.");
     }
 }
