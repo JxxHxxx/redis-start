@@ -1,13 +1,13 @@
 # redis-start
-redis server 실행 환경 <br>
+docker redis container <br>
 ```
 docker run -p [host port]:[container port] -name [container name] 0ec8ab59a35f
 ```
 
-or
+docker redis-stat (모니터링)
 
 ```
-docker run -p [host port]:[container port] -name [container name] redis
+docker run --name redis-stat --link [your redis container id]:redis -p [host port]:63790 -d insready/redis-stat --server redis
 ```
 
 # 아키텍처
