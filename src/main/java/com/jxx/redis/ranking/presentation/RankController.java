@@ -37,4 +37,10 @@ public class RankController {
 
         return "스코어 반영";
     }
+
+    @DeleteMapping("/ranks")
+    public void delete() {
+        log.info("랭킹 보드를 초기화 합니다.");
+        rankService.expireRankingBoard();
+    }
 }

@@ -26,4 +26,8 @@ public class RankService {
     public void addScore(Rank rank) {
         rankRepository.score(rank);
     }
+
+    public void expireRankingBoard() {
+        rankRepository.expire();
+    }
 }
