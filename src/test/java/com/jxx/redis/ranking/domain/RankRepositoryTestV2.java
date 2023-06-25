@@ -20,7 +20,7 @@ public class RankRepositoryTestV2 {
     @Autowired
     RankRepository rankRepository;
 
-    @DisplayName("테스트")
+    @DisplayName("redisTemplate 을 의존하는 repository Bean으로 테스트")
     @Test
     void create_rank() {
         Rank rank = new Rank("1", "엑스유니마라탕");

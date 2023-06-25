@@ -1,7 +1,6 @@
 package com.jxx.redis.auth.domain.token;
 
 import com.jxx.redis.EmbeddedRedisServerConfig;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,8 @@ import org.springframework.context.annotation.Import;
 
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @DataRedisTest
 @Import(EmbeddedRedisServerConfig.class)
 class RefreshTokenRepositoryTest {
@@ -17,7 +18,7 @@ class RefreshTokenRepositoryTest {
     @Autowired
     RefreshTokenRepository refreshTokenRepository;
 
-    @DisplayName("redis 동작 테스트")
+    @DisplayName("@RedisHash 테스트")
     @Test
     void name() {
         //given
@@ -32,7 +33,7 @@ class RefreshTokenRepositoryTest {
 
         RefreshToken findToken = refreshTokenRepository.findById("1").get();
 
-        Assertions.assertThat(findToken.getEmail()).isEqualTo("leesin5498@xuni.com");
-        Assertions.assertThat(findToken.getRefreshToken()).isEqualTo(accessCode);
+        assertThat(findToken.getEmail()).isEqualTo("leesin5498@xuni.com");
+        assertThat(findToken.getRefreshToken()).isEqualTo(accessCode);
     }
 }

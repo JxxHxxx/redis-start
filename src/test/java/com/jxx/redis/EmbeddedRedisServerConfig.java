@@ -33,7 +33,8 @@ public class EmbeddedRedisServerConfig {
 
     @PostConstruct
     public void redisServer() throws IOException {
-        redisServer = new RedisServer(redisPort);
+        int port = isRedisRunning()? findAvailablePort() : redisPort; // redis 포트가 켜져있을 때
+        redisServer = new RedisServer(port);
         redisServer.start();
     }
 
