@@ -1,7 +1,8 @@
 package com.jxx.redis.config;
 
+import ch.qos.logback.classic.spi.LogbackServiceProvider;
 import com.jxx.redis.ranking.domain.Rank;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.spi.SLF4JServiceProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +16,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.util.Collections;
 
-@Slf4j
 @Configuration
 @EnableRedisRepositories(keyspaceConfiguration = RedisConfig.MyKeyspaceConfiguration.class)
 public class RedisConfig {
@@ -45,7 +45,6 @@ public class RedisConfig {
 
         @Override
         protected Iterable<KeyspaceSettings> initialConfiguration() {
-            log.info("TTL 설정 시작");
             KeyspaceSettings keyspaceSettings = new KeyspaceSettings(Rank.class, "rank");
             keyspaceSettings.setTimeToLive(10L);
             return Collections.singleton(keyspaceSettings);

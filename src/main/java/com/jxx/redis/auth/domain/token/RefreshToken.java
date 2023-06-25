@@ -1,5 +1,6 @@
 package com.jxx.redis.auth.domain.token;
 
+import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
@@ -16,6 +17,7 @@ public class RefreshToken {
     private String refreshToken;
     private LocalDateTime createAt;
 
+    @Builder
     public RefreshToken(String memberId, String email, String refreshToken) {
         this.memberId = memberId;
         this.email = email;
