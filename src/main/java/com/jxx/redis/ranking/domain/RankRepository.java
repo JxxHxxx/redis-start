@@ -19,7 +19,8 @@ public class RankRepository {
 
     public void save(Rank rank) {
         ZSetOperations<String, Rank> zSetOperations = redisTemplate.opsForZSet();
-        zSetOperations.addIfAbsent(STORE_RANK_BOARD_KEY, rank, 0);
+        zSetOperations.add(STORE_RANK_BOARD_KEY, rank, 0);
+//        zSetOperations.addIfAbsent(STORE_RANK_BOARD_KEY, rank, 0);
     }
 
     public Set<ZSetOperations.TypedTuple<Rank>> range(long start, long end) {
